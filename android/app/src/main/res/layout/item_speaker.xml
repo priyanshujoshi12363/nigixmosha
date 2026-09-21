@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/surface"
+    app:cardCornerRadius="@dimen/card_radius"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/stroke"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/colorBar"
+            android:layout_width="match_parent"
+            android:layout_height="4dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="18dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/avatar"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:importantForAutofill="no"
+                        android:inputType="textPersonName|textCapWords"
+                        android:padding="0dp"
+                        android:textColor="@color/text_primary"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/sub"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:textColor="@color/text_tertiary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/traitsRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Nigix.Dropdown"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    app:hintEnabled="false">
+
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:id="@+id/gender"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        android:textColor="@color/text_primary"
+                        android:textSize="12.5sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Nigix.Dropdown"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:hintEnabled="false">
+
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:id="@+id/age"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        android:textColor="@color/text_primary"
+                        android:textSize="12.5sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/personality"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:chipSpacingHorizontal="6dp"
+                app:chipSpacingVertical="4dp" />
+
+            <TextView
+                android:id="@+id/style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ellipsize="end"
+                android:lineSpacingMultiplier="1.25"
+                android:maxLines="3"
+                android:textColor="@color/text_tertiary"
+                android:textSize="12.5sp" />
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/share"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_chip"
+                android:paddingStart="12dp"
+                android:paddingEnd="8dp"
+                android:textColor="@color/text_secondary"
+                android:textSize="12.5sp" />
+
+            <TextView
+                style="@style/Text.Nigix.Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/voice" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/voiceLayout"
+                style="@style/Widget.Nigix.Dropdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/voice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:textColor="@color/text_primary"
+                    android:textSize="13sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/reason"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:drawablePadding="6dp"
+                android:lineSpacingMultiplier="1.2"
+                android:textColor="@color/text_tertiary"
+                android:textSize="12sp"
+                app:drawableStartCompat="@drawable/ic_sparkle"
+                app:drawableTint="@color/text_primary" />
+
+            <LinearLayout
+                android:id="@+id/sliders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/Text.Nigix.Label"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/pitch" />
+
+                        <TextView
+                            android:id="@+id/pitchValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFeatureSettings="tnum"
+                            android:textColor="@color/text_tertiary"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/pitch"
+                        style="@style/Widget.Nigix.Slider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:stepSize="1"
+                        android:valueFrom="-30"
+                        android:valueTo="30" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/Text.Nigix.Label"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/pace" />
+
+                        <TextView
+                            android:id="@+id/rateValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFeatureSettings="tnum"
+                            android:textColor="@color/text_tertiary"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/rate"
+                        style="@style/Widget.Nigix.Slider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:stepSize="1"
+                        android:valueFrom="-35"
+                        android:valueTo="35" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/pitchHint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/no_pitch"
+                android:textColor="@color/text_tertiary"
+                android:textSize="11sp"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/footDot"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp" />
+
+                <TextView
+                    android:id="@+id/footText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="@color/text_tertiary"
+                    android:textSize="11.5sp" />
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/hear"
+                        style="@style/Widget.Nigix.Button.Ghost.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/hear_voice"
+                        app:icon="@drawable/ic_play" />
+
+                    <com.google.android.material.progressindicator.CircularProgressIndicator
+                        android:id="@+id/hearLoading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="14dp"
+                        android:elevation="4dp"
+                        android:indeterminate="true"
+                        android:visibility="gone"
+                        app:indicatorColor="@color/accent"
+                        app:indicatorSize="16dp"
+                        app:trackThickness="2dp" />
+                </FrameLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -1,0 +1,6 @@
+-keep class com.nigixmosha.app.data.model.** { *; }
+-keep class com.nigixmosha.app.engine.model.** { *; }
+-keep class com.nigixmosha.app.engine.Catalog { *; }
+-keep class com.nigixmosha.app.data.ApiClient$* { *; }
+-keep class com.nigixmosha.app.studio.StudioStore$* { *; }
+-keepattributes Signature, *Annotation*

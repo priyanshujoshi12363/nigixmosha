@@ -8,6 +8,7 @@ const COLUMNS = [
       { href: "/studio", label: "Studio" },
       { href: "/settings", label: "Engines & keys" },
       { href: "/#how", label: "How it works" },
+      { href: "/privacy", label: "Privacy" },
     ],
   },
   {
@@ -50,6 +51,9 @@ export function Footer() {
         <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-2 px-6 py-6 text-xs text-muted sm:flex-row sm:items-center">
           <span>© {new Date().getFullYear()} nigixmosha. Crafted for readers who listen.</span>
           <span className="font-mono">Your keys never leave your browser storage.</span>
+          <span className="font-mono tracking-wide">
+            made by <span className="font-semibold text-ink-2">knoc8</span>
+          </span>
         </div>
       </div>
     </footer>

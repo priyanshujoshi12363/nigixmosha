@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp">
+
+    <FrameLayout
+        android:id="@+id/phaseDot"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@drawable/bg_ring">
+
+        <ImageView
+            android:id="@+id/phaseCheck"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_check"
+            android:visibility="gone"
+            app:tint="@color/night" />
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/phaseSpin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:indicatorColor="#FFFFFFFF"
+            app:indicatorSize="14dp"
+            app:trackThickness="1.5dp" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/phaseLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_weight="1"
+        android:textColor="#FFFFFFFF"
+        android:textSize="14sp" />
+</LinearLayout>

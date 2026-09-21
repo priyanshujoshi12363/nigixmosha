@@ -17,6 +17,7 @@ import {
   TriangleAlert,
   Users,
 } from "lucide-react";
+import { AD_SLOTS, AdSlot } from "@/components/ads/ad-slot";
 import { Bars, Button, ButtonLink, Initials, Input } from "@/components/ui";
 import { deleteProject, getProject, listProjects } from "@/lib/client/library";
 import { languageName } from "@/lib/engine/lang";
@@ -374,6 +375,7 @@ export function HistoryView() {
           })}
         </div>
       )}
+      <AdSlot slot={AD_SLOTS.history} className="mt-12" />
     </div>
   );
 }

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_card"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        style="@style/Text.Nigix.Mono"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="6dp"
+        android:gravity="center_vertical"
+        android:text="@string/voice_engine"
+        app:drawableStartCompat="@drawable/ic_audio_lines"
+        app:drawableTint="@color/text_tertiary" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Nigix.Dropdown"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/engine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:textColor="@color/text_primary"
+                android:textSize="13sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/recast"
+                style="@style/Widget.Nigix.Button.Ghost.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recast"
+                app:icon="@drawable/ic_refresh" />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/recasting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:elevation="4dp"
+                android:indeterminate="true"
+                android:visibility="gone"
+                app:indicatorColor="@color/accent"
+                app:indicatorSize="18dp"
+                app:trackThickness="2dp" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/modelLayout"
+        style="@style/Widget.Nigix.Dropdown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:hintEnabled="false">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/model"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:inputType="none"
+            android:textColor="@color/text_primary"
+            android:textSize="13sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/voicesLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:indicatorColor="@color/text_tertiary"
+            app:indicatorSize="14dp"
+            app:trackThickness="1.5dp" />
+
+        <View
+            android:id="@+id/liveDot"
+            android:layout_width="7dp"
+            android:layout_height="7dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_dot" />
+
+        <TextView
+            android:id="@+id/voicesInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/text_tertiary"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/castBy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_chip"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:textColor="@color/text_secondary"
+        android:textSize="12sp"
+        android:visibility="gone"
+        app:drawableStartCompat="@drawable/ic_brain"
+        app:drawableTint="@color/text_secondary" />
+
+    <LinearLayout
+        android:id="@+id/engineNotices"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+</LinearLayout>

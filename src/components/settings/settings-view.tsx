@@ -14,12 +14,14 @@ import {
   LogOut,
   ShieldCheck,
   SlidersHorizontal,
+  Trash2,
   UserRound,
   Zap,
 } from "lucide-react";
+import { AD_SLOTS, AdSlot } from "@/components/ads/ad-slot";
 import { Badge, Button, Initials, Input, Label, Slider, Toggle } from "@/components/ui";
 import { requestSpeech } from "@/lib/client/api";
-import { changePassword, logout, resetLocalSession } from "@/lib/client/auth";
+import { changePassword, deleteAccount, logout, resetLocalSession } from "@/lib/client/auth";
 import type { AccountUser } from "@/lib/library-types";
 import { TTS_PROVIDERS, type TTSProviderMeta } from "@/lib/providers";
 import { DEFAULT_ADVANCED, isTTSReady, useSettings } from "@/lib/store/settings";
@@ -326,7 +328,71 @@ function AccountSection({ user }: { user: AccountUser }) {
           </Button>
         </form>
       </div>
+      <DeleteAccount />
     </section>
+  );
+}
+
+function DeleteAccount() {
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [password, setPassword] = useState("");
+  const [state, setState] = useState<{ status: "idle" | "busy" | "error"; message?: string }>({ status: "idle" });
+
+  async function submit(e: FormEvent) {
+    e.preventDefault();
+    if (!password) return;
+    setState({ status: "busy" });
+    try {
+      await deleteAccount(password);
+      resetLocalSession();
+      router.replace("/");
+      router.refresh();
+    } catch (err) {
+      setState({ status: "error", message: err instanceof Error ? err.message : String(err) });
+    }
+  }
+
+  return (
+    <div className="mt-4 rounded-3xl border border-ember/25 bg-ember/5 p-6">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <div className="text-sm font-semibold text-ink">Delete account</div>
+          <p className="mt-1 max-w-xl text-xs leading-relaxed text-muted">
+            Permanently removes your account, every chapter, cast and script, and all recorded audiobooks. This cannot be undone.
+          </p>
+        </div>
+        {!open && (
+          <Button variant="danger" size="sm" onClick={() => setOpen(true)}>
+            <Trash2 className="size-3.5" /> Delete account
+          </Button>
+        )}
+      </div>
+      {open && (
+        <form onSubmit={submit} className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end" noValidate>
+          <div className="flex-1">
+            <Label htmlFor="delete-password">Confirm with your password</Label>
+            <Input
+              id="delete-password"
+              type="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div className="flex gap-2">
+            <Button type="button" variant="ghost" size="sm" onClick={() => setOpen(false)} disabled={state.status === "busy"}>
+              Cancel
+            </Button>
+            <Button type="submit" variant="danger" size="sm" disabled={!password || state.status === "busy"}>
+              {state.status === "busy" && <LoaderCircle className="size-3.5 animate-spin" />}
+              Delete forever
+            </Button>
+          </div>
+        </form>
+      )}
+      {state.message && <div role="status" className="mt-3 text-xs text-ember">{state.message}</div>}
+    </div>
   );
 }
 
@@ -486,6 +552,7 @@ export function SettingsView({ user }: { user: AccountUser }) {
               </Button>
             </div>
           </section>
+          <AdSlot slot={AD_SLOTS.settings} className="mb-4" />
         </div>
       </div>
     </div>

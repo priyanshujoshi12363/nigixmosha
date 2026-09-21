@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="screen_gutter">32dp</dimen>
+    <dimen name="auth_max_width">480dp</dimen>
+    <dimen name="welcome_logo">136dp</dimen>
+    <dimen name="welcome_wordmark">44sp</dimen>
+    <dimen name="welcome_tagline">21sp</dimen>
+    <dimen name="welcome_wave_width">320dp</dimen>
+    <dimen name="welcome_wave_height">72dp</dimen>
+    <dimen name="auth_title">38sp</dimen>
+    <dimen name="home_expanded_title">36sp</dimen>
+    <dimen name="home_header_height">236dp</dimen>
+    <dimen name="grid_spacing">16dp</dimen>
+    <dimen name="home_greeting_gap">66dp</dimen>
+</resources>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/screen_gutter"
+    android:paddingTop="24dp"
+    android:paddingEnd="@dimen/screen_gutter"
+    android:paddingBottom="48dp"
+    android:visibility="gone">
+
+    <ImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:importantForAccessibility="no"
+        android:src="@drawable/ic_cloud_off"
+        app:tint="@color/text_tertiary" />
+
+    <TextView
+        style="@style/Text.Nigix.Display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/error_title"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/errorMessage"
+        style="@style/Text.Nigix.Body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:maxWidth="360dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/errorRetry"
+        style="@style/Widget.Nigix.Button.Ghost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:text="@string/retry"
+        app:icon="@drawable/ic_refresh"
+        app:iconSize="18dp" />
+</LinearLayout>

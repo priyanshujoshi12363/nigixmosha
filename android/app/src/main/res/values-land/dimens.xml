@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="welcome_logo">72dp</dimen>
+    <dimen name="welcome_wordmark">28sp</dimen>
+    <dimen name="welcome_tagline">15sp</dimen>
+    <dimen name="welcome_wave_height">36dp</dimen>
+    <dimen name="home_header_height">180dp</dimen>
+</resources>

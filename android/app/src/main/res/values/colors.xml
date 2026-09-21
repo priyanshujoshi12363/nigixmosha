@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg">#F6F5F1</color>
+    <color name="bg_elevated">#FBFAF7</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_high">#F1EFEA</color>
+    <color name="surface_highest">#E6E4DE</color>
+    <color name="stroke">#E7E5DF</color>
+    <color name="stroke_strong">#D3D0C8</color>
+    <color name="text_primary">#0B0B0E</color>
+    <color name="text_secondary">#4B4B55</color>
+    <color name="text_tertiary">#86868F</color>
+    <color name="accent">#0D9488</color>
+    <color name="accent_deep">#5FB8AF</color>
+    <color name="accent_soft">#1A0D9488</color>
+    <color name="on_accent">#FFFFFF</color>
+    <color name="violet">#4F46E5</color>
+    <color name="crimson">#BE123C</color>
+    <color name="amber">#D97706</color>
+    <color name="error">#E11D48</color>
+    <color name="error_bg">#FFF1F3</color>
+    <color name="error_stroke">#FBC9D4</color>
+    <color name="info_bg">#ECFBF8</color>
+    <color name="info_stroke">#B4ECE2</color>
+    <color name="glow_teal">#2DD4BF</color>
+    <color name="glow_violet">#818CF8</color>
+    <color name="night">#070B14</color>
+    <color name="narrator">#1F2637</color>
+    <color name="narrator_on_dark">#94A3B8</color>
+    <color name="tide">#0891B2</color>
+    <color name="backdrop_dot">#12000000</color>
+    <color name="bar_bg">#F2FFFFFF</color>
+    <color name="step_active_dot">#2EFFFFFF</color>
+    <color name="ring">#33000000</color>
+</resources>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Nigix" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/accent</item>
+        <item name="colorOnPrimary">@color/on_accent</item>
+        <item name="colorPrimaryContainer">@color/accent_deep</item>
+        <item name="colorOnPrimaryContainer">@color/text_primary</item>
+        <item name="colorSecondary">@color/violet</item>
+        <item name="colorOnSecondary">@color/text_primary</item>
+        <item name="colorError">@color/error</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorOnSurfaceVariant">@color/text_secondary</item>
+        <item name="colorSurfaceContainer">@color/surface</item>
+        <item name="colorSurfaceContainerLow">@color/bg_elevated</item>
+        <item name="colorSurfaceContainerHigh">@color/surface_high</item>
+        <item name="colorSurfaceContainerHighest">@color/surface_highest</item>
+        <item name="colorOutline">@color/stroke_strong</item>
+        <item name="colorOutlineVariant">@color/stroke</item>
+        <item name="android:colorBackground">@color/bg</item>
+        <item name="android:windowBackground">@color/bg</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">@bool/light_bars</item>
+        <item name="android:windowLightNavigationBar">@bool/light_bars</item>
+        <item name="textInputStyle">@style/Widget.Nigix.TextInput</item>
+        <item name="materialButtonStyle">@style/Widget.Nigix.Button</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Nigix.BottomSheet</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.Nigix.Dialog</item>
+        <item name="snackbarStyle">@style/Widget.Nigix.Snackbar</item>
+    </style>
+
+    <style name="Theme.Nigix.Welcome" parent="Theme.Nigix" />
+
+    <style name="ThemeOverlay.Nigix.BottomSheet" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.Nigix.BottomSheet</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="ThemeOverlay.Nigix.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="shapeAppearanceCornerExtraLarge">@style/Shape.Nigix.Dialog</item>
+        <item name="colorSurfaceContainerHigh">@color/surface_high</item>
+    </style>
+</resources>

@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/screen_gutter"
+        android:paddingTop="16dp"
+        android:paddingEnd="@dimen/screen_gutter"
+        android:paddingBottom="32dp">
+
+        <LinearLayout
+            android:id="@+id/errorCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_banner_error"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="8dp"
+                android:gravity="center_vertical"
+                android:text="@string/recording_stopped"
+                android:textColor="@color/error"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:drawableStartCompat="@drawable/ic_warning"
+                app:drawableTint="@color/error" />
+
+            <TextView
+                android:id="@+id/errorText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:lineSpacingMultiplier="1.25"
+                android:textColor="@color/text_secondary"
+                android:textSize="13.5sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/errorSettings"
+                    style="@style/Widget.Nigix.Button.Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/check_engine_settings"
+                    android:textColor="@color/text_primary" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/errorEngine"
+                    style="@style/Widget.Nigix.Button.Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/try_other_engine"
+                    android:textColor="@color/text_primary" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/producingCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card_night"
+            android:clipToOutline="true"
+            android:visibility="gone">
+
+            <com.nigixmosha.app.ui.widget.GlowView
+                android:id="@+id/producingGlow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingStart="22dp"
+                android:paddingTop="40dp"
+                android:paddingEnd="22dp"
+                android:paddingBottom="32dp">
+
+                <TextView
+                    style="@style/Text.Nigix.Mono"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/recording_in_progress"
+                    android:textColor="#8CFFFFFF" />
+
+                <TextView
+                    android:id="@+id/percent"
+                    style="@style/Text.Nigix.Display"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:fontFeatureSettings="tnum"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="56sp" />
+
+                <TextView
+                    android:id="@+id/lineOf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:fontFeatureSettings="tnum"
+                    android:textColor="#99FFFFFF"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/produceProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="12dp"
+                    android:max="1000"
+                    app:indicatorColor="#FFFFFFFF"
+                    app:trackColor="#1AFFFFFF"
+                    app:trackCornerRadius="3dp"
+                    app:trackThickness="6dp" />
+
+                <LinearLayout
+                    android:id="@+id/current"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:background="@drawable/bg_pill_white_card"
+                    android:orientation="horizontal"
+                    android:padding="16dp"
+                    android:visibility="invisible">
+
+                    <TextView
+                        android:id="@+id/currentAvatar"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="14dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/currentName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxWidth="160dp"
+                                android:singleLine="true"
+                                android:textColor="#FFFFFFFF"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/currentEmotion"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:background="@drawable/bg_pill_white"
+                                android:paddingStart="8dp"
+                                android:paddingTop="2dp"
+                                android:paddingEnd="8dp"
+                                android:paddingBottom="2dp"
+                                android:textColor="#B3FFFFFF"
+                                android:textSize="10.5sp" />
+
+                            <com.nigixmosha.app.ui.widget.EqualizerView
+                                android:id="@+id/currentEq"
+                                android:layout_width="16dp"
+                                android:layout_height="12dp"
+                                android:layout_marginStart="8dp" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/currentText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:ellipsize="end"
+                            android:maxLines="3"
+                            android:textColor="#D9FFFFFF"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/stopRecording"
+                    style="@style/Widget.Nigix.Button.Ghost.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:text="@string/stop_recording"
+                    android:textColor="#FFFFFFFF"
+                    app:backgroundTint="#1AFFFFFF"
+                    app:icon="@drawable/ic_close"
+                    app:iconTint="#FFFFFFFF"
+                    app:strokeWidth="0dp" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/playerCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card_night"
+            android:clipToOutline="true"
+            android:visibility="gone">
+
+            <com.nigixmosha.app.ui.widget.GlowView
+                android:id="@+id/playerGlow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:id="@+id/cover"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:background="@drawable/bg_brand"
+                        android:elevation="8dp">
+
+                        <ImageView
+                            android:id="@+id/coverLogo"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_margin="12dp"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/avd_logo_blink" />
+
+                        <com.nigixmosha.app.ui.widget.EqualizerView
+                            android:id="@+id/coverEq"
+                            android:layout_width="22dp"
+                            android:layout_height="18dp"
+                            android:layout_gravity="bottom|end"
+                            android:layout_margin="12dp" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/Text.Nigix.Mono"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/full_cast_audiobook"
+                            android:textColor="#BFFFFFFF"
+                            android:textSize="10sp" />
+
+                        <TextView
+                            android:id="@+id/bookTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:ellipsize="end"
+                            android:fontFamily="sans-serif-black"
+                            android:maxLines="3"
+                            android:textColor="#FFFFFFFF"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:id="@+id/bookMeta"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textColor="#BFFFFFFF"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="22dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/Text.Nigix.Mono"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/now_speaking"
+                        android:textColor="#80FFFFFF"
+                        android:textSize="10.5sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/download"
+                        style="@style/Widget.Nigix.Button.Ghost.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFFFFFFF"
+                        app:backgroundTint="#1AFFFFFF"
+                        app:icon="@drawable/ic_download"
+                        app:iconTint="#FFFFFFFF"
+                        app:strokeColor="#26FFFFFF" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/speakingRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/speakingAvatar"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp" />
+
+                    <TextView
+                        android:id="@+id/speakingName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:textColor="#FFFFFFFF"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/speakingEmotion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_pill_white"
+                        android:paddingStart="10dp"
+                        android:paddingTop="2dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="2dp"
+                        android:textColor="#B3FFFFFF"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/speakingText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.15"
+                    android:maxLines="4"
+                    android:minLines="2"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/upcoming"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="end"
+                    android:lineSpacingMultiplier="1.3"
+                    android:maxLines="2"
+                    android:textColor="#59FFFFFF"
+                    android:textSize="13sp" />
+
+                <com.nigixmosha.app.ui.widget.WaveSeekView
+                    android:id="@+id/wave"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:layout_marginTop="24dp"
+                    android:contentDescription="@string/seek" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/elapsed"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="monospace"
+                        android:fontFeatureSettings="tnum"
+                        android:textColor="#80FFFFFF"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:id="@+id/total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:fontFeatureSettings="tnum"
+                        android:textColor="#80FFFFFF"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/back10"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/back_10"
+                        android:src="@drawable/ic_replay"
+                        app:tint="#B3FFFFFF" />
+
+                    <FrameLayout
+                        android:id="@+id/playPause"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginEnd="6dp"
+                        android:background="@drawable/bg_circle_white"
+                        android:clickable="true"
+                        android:contentDescription="@string/play"
+                        android:elevation="8dp"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackgroundBorderless"
+                        android:stateListAnimator="@animator/press_scale">
+
+                        <ImageView
+                            android:id="@+id/playIcon"
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
+                            android:layout_gravity="center"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_play"
+                            app:tint="@color/night" />
+                    </FrameLayout>
+
+                    <ImageButton
+                        android:id="@+id/forward10"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/forward_10"
+                        android:src="@drawable/ic_forward"
+                        app:tint="#B3FFFFFF" />
+
+                    <HorizontalScrollView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:scrollbars="none">
+
+                        <LinearLayout
+                            android:id="@+id/rates"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_pill_white"
+                            android:orientation="horizontal"
+                            android:padding="3dp" />
+                    </HorizontalScrollView>
+                </LinearLayout>
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/jumps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    app:chipSpacingHorizontal="6dp"
+                    app:chipSpacingVertical="6dp" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/infoBlock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/recordedWith"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingMultiplier="1.25"
+                android:textColor="@color/text_tertiary"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/libraryStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:drawablePadding="8dp"
+                android:gravity="center_vertical"
+                android:textSize="13sp" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/uploadProgress"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:max="1000"
+                android:visibility="gone"
+                app:indicatorColor="@color/accent"
+                app:trackColor="@color/stroke"
+                app:trackCornerRadius="2dp"
+                app:trackThickness="4dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/rerecord"
+                style="@style/Widget.Nigix.Button.Ghost.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/rerecord"
+                app:icon="@drawable/ic_refresh" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/readyCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingStart="24dp"
+            android:paddingTop="40dp"
+            android:paddingEnd="24dp"
+            android:paddingBottom="36dp"
+            android:visibility="gone">
+
+            <FrameLayout
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/bg_brand_tile"
+                android:elevation="6dp">
+
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_gravity="center"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_headphones"
+                    app:tint="#FFFFFFFF" />
+            </FrameLayout>
+
+            <TextView
+                style="@style/Text.Nigix.Display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:text="@string/ready_to_record"
+                android:textSize="28sp" />
+
+            <TextView
+                android:id="@+id/readyBody"
+                style="@style/Text.Nigix.Body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:maxWidth="440dp" />
+
+            <TextView
+                android:id="@+id/readyMeta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:drawablePadding="6dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"
+                app:drawableStartCompat="@drawable/ic_clock"
+                app:drawableTint="@color/text_tertiary" />
+
+            <LinearLayout
+                android:id="@+id/readyAvatars"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:orientation="horizontal" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/startRecording"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:paddingStart="32dp"
+                android:paddingEnd="32dp"
+                android:text="@string/start_recording" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/castFirst"
+                style="@style/Widget.Nigix.Button.Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/cast_voices_first"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

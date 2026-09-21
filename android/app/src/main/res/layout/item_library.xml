@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/surface"
+    app:cardCornerRadius="@dimen/card_radius"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/stroke"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/coverFrame"
+            android:layout_width="match_parent"
+            android:layout_height="156dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground">
+
+            <com.nigixmosha.app.ui.widget.CoverView
+                android:id="@+id/cover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="14dp"
+                android:background="@drawable/bg_pill_white"
+                android:paddingStart="10dp"
+                android:paddingTop="3dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="3dp"
+                android:textColor="#FFFFFFFF"
+                android:textSize="11sp" />
+
+            <FrameLayout
+                android:id="@+id/play"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_gravity="top|end"
+                android:layout_margin="14dp"
+                android:background="@drawable/bg_circle_white"
+                android:clickable="true"
+                android:contentDescription="@string/play"
+                android:elevation="6dp"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:stateListAnimator="@animator/press_scale">
+
+                <ImageView
+                    android:id="@+id/playIcon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_play"
+                    app:tint="@color/night" />
+
+                <com.nigixmosha.app.ui.widget.EqualizerView
+                    android:id="@+id/eq"
+                    android:layout_width="18dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center"
+                    android:visibility="gone" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/lang"
+                    style="@style/Text.Nigix.Mono"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#B3FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:ellipsize="end"
+                    android:fontFamily="sans-serif"
+                    android:maxLines="2"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/progress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:max="1000"
+                android:visibility="gone"
+                app:indicatorColor="#FFFFFFFF"
+                app:trackColor="#33FFFFFF"
+                app:trackCornerRadius="0dp"
+                app:trackThickness="3dp" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/cast"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal" />
+
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_tertiary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/meta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:drawablePadding="6dp"
+                android:gravity="center_vertical"
+                android:lineSpacingMultiplier="1.15"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp"
+                app:drawableStartCompat="@drawable/ic_clock"
+                app:drawableTint="@color/text_tertiary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/open"
+                        style="@style/Widget.Nigix.Button.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:text="@string/open_in_studio" />
+
+                    <com.google.android.material.progressindicator.CircularProgressIndicator
+                        android:id="@+id/opening"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:elevation="8dp"
+                        android:indeterminate="true"
+                        android:visibility="gone"
+                        app:indicatorColor="@color/on_accent"
+                        app:indicatorSize="18dp"
+                        app:trackThickness="2dp" />
+                </FrameLayout>
+
+                <ImageButton
+                    android:id="@+id/download"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="6dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/download_mp3"
+                    android:src="@drawable/ic_download"
+                    app:tint="@color/text_secondary" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/delete"
+                    style="@style/Widget.Nigix.Button.Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="@string/delete"
+                    app:icon="@drawable/ic_delete"
+                    app:iconSize="16dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

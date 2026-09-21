@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">nigixmosha</string>
+    <string name="wordmark_a">nigix</string>
+    <string name="wordmark_b">mosha</string>
+    <string name="tagline">Every character deserves their own voice.</string>
+    <string name="tagline_accent_from">their own voice.</string>
+
+    <string name="status_waking">Waking up the studio…</string>
+    <string name="status_slow">Free servers nap when idle. The first load can take up to a minute.</string>
+    <string name="retry">Try again</string>
+
+    <string name="auth_title_login">Welcome back</string>
+    <string name="auth_title_register">Create your account</string>
+    <string name="auth_sub_login">Sign in to pick up where your characters left off.</string>
+    <string name="auth_sub_register">One account for your cast, your chapters and every audiobook you make.</string>
+    <string name="tab_login">Sign in</string>
+    <string name="tab_register">Create account</string>
+    <string name="field_name">Display name</string>
+    <string name="field_name_helper">Shown on your library</string>
+    <string name="field_username">Username</string>
+    <string name="field_username_helper">3–24 letters, numbers or underscore</string>
+    <string name="field_password">Password</string>
+    <string name="action_login">Sign in</string>
+    <string name="action_register">Create account</string>
+    <string name="switch_to_register_lead">New here?</string>
+    <string name="switch_to_register_action">Create an account</string>
+    <string name="switch_to_login_lead">Already have an account?</string>
+    <string name="switch_to_login_action">Sign in</string>
+    <string name="auth_footer">Your library stays in sync with nigixmosha.onrender.com</string>
+    <string name="err_username_empty">Enter your username</string>
+    <string name="err_password_empty">Enter your password</string>
+    <string name="err_username_format">Use 3–24 letters, numbers or underscore</string>
+    <string name="err_password_short">Use at least 8 characters</string>
+    <string name="err_password_long">That password is too long</string>
+    <string name="strength_0">Too short</string>
+    <string name="strength_1">Weak</string>
+    <string name="strength_2">Okay</string>
+    <string name="strength_3">Strong</string>
+    <string name="strength_4">Excellent</string>
+    <string name="notice_expired">Your session ended. Sign in again to continue.</string>
+    <string name="notice_signed_out">You\'re signed out. See you soon.</string>
+
+    <string name="greeting_morning">Good morning</string>
+    <string name="greeting_afternoon">Good afternoon</string>
+    <string name="greeting_evening">Good evening</string>
+    <string name="greeting_night">Up late</string>
+    <string name="home_title">Hi, %1$s</string>
+    <string name="home_stats_loading">Loading your library…</string>
+    <string name="home_stats_empty">Nothing produced yet</string>
+    <string name="home_stats">%1$s · %2$s</string>
+    <plurals name="home_chapters">
+        <item quantity="one">%d chapter</item>
+        <item quantity="other">%d chapters</item>
+    </plurals>
+    <plurals name="home_ready">
+        <item quantity="one">%d ready to play</item>
+        <item quantity="other">%d ready to play</item>
+    </plurals>
+    <plurals name="words">
+        <item quantity="one">%s word</item>
+        <item quantity="other">%s words</item>
+    </plurals>
+    <plurals name="characters">
+        <item quantity="one">%d character</item>
+        <item quantity="other">%d characters</item>
+    </plurals>
+    <string name="meta_join">%1$s · %2$s</string>
+    <string name="draft">Draft</string>
+    <string name="empty_title">Your shelf is empty</string>
+    <string name="empty_body">Paste a chapter in the studio and nigixmosha will cast every character. Finished audiobooks land here.</string>
+    <string name="open_studio">Open the studio</string>
+    <string name="error_title">Couldn\'t load your library</string>
+    <string name="not_produced">This chapter isn\'t produced yet. Finish it in the studio.</string>
+    <string name="open">Open</string>
+    <string name="player_buffering">Buffering…</string>
+    <string name="player_error">Couldn\'t play this audiobook</string>
+    <string name="player_time">%1$s / %2$s</string>
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="close_player">Close player</string>
+    <string name="account">Account</string>
+    <string name="member_since">Member since %1$s</string>
+    <string name="sign_out">Sign out</string>
+    <string name="sign_out_confirm_title">Sign out?</string>
+    <string name="sign_out_confirm_body">You can sign back in any time. Your audiobooks stay safe in your library.</string>
+    <string name="cancel">Cancel</string>
+    <string name="no_browser">No browser found to open the studio.</string>
+
+    <string name="err_network">Can\'t reach nigixmosha. Check your connection and try again.</string>
+    <string name="err_timeout">The server is taking too long to respond. It may still be waking up. Try again.</string>
+    <string name="err_server">Something went wrong on our side (%1$d). Try again in a moment.</string>
+    <string name="err_unexpected">Something unexpected happened. Try again.</string>
+    <string name="err_session">Please sign in to continue.</string>
+
+    <string name="err_too_large">This audiobook is too large for cloud storage. Download it instead.</string>
+    <string name="err_upload_failed">Audio upload failed (%1$d)</string>
+    <string name="err_upload_network">Network error while uploading the audiobook</string>
+    <string name="err_library_save">The project could not be saved to the library</string>
+    <string name="director_opening">Opening the manuscript</string>
+    <string name="director_casting">Casting %1$s voices</string>
+    <string name="cast_first">Cast the voices first</string>
+</resources>

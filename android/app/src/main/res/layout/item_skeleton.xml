@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:importantForAccessibility="noHideDescendants"
+    app:cardBackgroundColor="@color/surface"
+    app:cardCornerRadius="@dimen/card_radius"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/stroke"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/pulse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <View
+            android:id="@+id/s1"
+            android:layout_width="64dp"
+            android:layout_height="20dp"
+            android:background="@drawable/bg_skeleton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/s2"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="76dp"
+            android:background="@drawable/bg_skeleton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/s1" />
+
+        <View
+            android:id="@+id/s3"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_skeleton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/s2"
+            app:layout_constraintWidth_percent="0.42" />
+
+        <View
+            android:id="@+id/s4"
+            android:layout_width="92dp"
+            android:layout_height="28dp"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_skeleton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/s3" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="14dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_skeleton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/s4"
+            app:layout_constraintWidth_percent="0.5" />
+
+        <View
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:background="@drawable/bg_skeleton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

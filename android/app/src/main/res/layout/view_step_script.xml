@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/filters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="12dp"
+            android:paddingBottom="6dp">
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingStart="@dimen/screen_gutter"
+                android:paddingEnd="@dimen/screen_gutter"
+                android:scrollbars="none">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chips"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:chipSpacingHorizontal="6dp"
+                    app:selectionRequired="true"
+                    app:singleLine="true"
+                    app:singleSelection="true" />
+            </HorizontalScrollView>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Nigix.TextInput.Compact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/screen_gutter"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="@dimen/screen_gutter"
+                app:endIconMode="clear_text"
+                app:hintEnabled="false"
+                app:startIconDrawable="@drawable/ic_search">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/search_lines"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:scrollbars="vertical" />
+
+            <TextView
+                android:id="@+id/noLines"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:gravity="center"
+                android:text="@string/no_lines"
+                android:textColor="@color/text_tertiary"
+                android:textSize="14sp"
+                android:visibility="gone" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/bar"
+        layout="@layout/view_action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom" />
+</FrameLayout>

@@ -58,6 +58,16 @@ export const logout = (all = false) => post<{ ok: boolean }>("/api/auth/logout",
 export const changePassword = (current: string, next: string) =>
   post<{ ok: boolean }>("/api/auth/password", { current, next });
 
+export async function deleteAccount(password: string) {
+  const res = await fetch("/api/auth/account", {
+    method: "DELETE",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ password }),
+  });
+  const data = (await res.json().catch(() => ({}))) as { error?: string };
+  if (!res.ok) throw new ApiError(data.error ?? `Request failed (${res.status})`, res.status);
+}
+
 export async function fetchMe(): Promise<AccountUser | null> {
   try {
     const res = await fetch("/api/auth/me", { cache: "no-store" });

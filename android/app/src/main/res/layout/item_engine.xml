@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/surface"
+    app:cardCornerRadius="@dimen/card_radius"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/stroke"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="18dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tile"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_engine_tile"
+                android:gravity="center"
+                android:textColor="#FFFFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_primary"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/badges"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    app:chipSpacingHorizontal="6dp"
+                    app:chipSpacingVertical="4dp" />
+
+                <TextView
+                    android:id="@+id/tagline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:lineSpacingMultiplier="1.15"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/keyLayout"
+            style="@style/Widget.Nigix.TextInput.Compact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            app:endIconMode="password_toggle"
+            app:startIconDrawable="@drawable/ic_key">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:importantForAutofill="no"
+                android:inputType="textPassword|textNoSuggestions"
+                android:textColor="@color/text_primary"
+                android:textSize="13sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/baseLayout"
+            style="@style/Widget.Nigix.TextInput.Compact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="@string/base_url">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/base"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:inputType="textUri"
+                android:textColor="@color/text_primary"
+                android:textSize="13sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/modelLayout"
+            style="@style/Widget.Nigix.Dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="@string/model"
+            app:endIconMode="dropdown_menu">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/model"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:inputType="text"
+                android:textColor="@color/text_primary"
+                android:textSize="13sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/testResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:paddingStart="12dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="8dp"
+            android:textSize="12.5sp"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/use"
+                style="@style/Widget.Nigix.Button.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/use_for_voices" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/test"
+                    style="@style/Widget.Nigix.Button.Ghost.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/test"
+                    app:icon="@drawable/ic_bolt" />
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/testing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:elevation="8dp"
+                    android:indeterminate="true"
+                    android:visibility="gone"
+                    app:indicatorColor="@color/accent"
+                    app:indicatorSize="18dp"
+                    app:trackThickness="2dp" />
+            </FrameLayout>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/keyLink"
+                style="@style/Widget.Nigix.Button.Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_open_in_new"
+                app:iconGravity="textEnd"
+                app:iconSize="14dp" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
