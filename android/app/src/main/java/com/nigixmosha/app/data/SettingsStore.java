@@ -119,6 +119,7 @@ public final class SettingsStore {
         a.speakerGapMs = advanced.speakerGapMs;
         a.paragraphGapMs = advanced.paragraphGapMs;
         a.normalize = advanced.normalize;
+        a.soundscape = advanced.soundscape == null ? "subtle" : advanced.soundscape;
         return a;
     }
 

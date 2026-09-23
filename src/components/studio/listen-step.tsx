@@ -2,18 +2,70 @@
 
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
-import { AudioLines, Clock, CloudCheck, CloudUpload, Headphones, RefreshCw, TriangleAlert, X } from "lucide-react";
+import { AudioLines, Clock, CloudCheck, CloudUpload, Headphones, RefreshCw, TriangleAlert, Waves, X } from "lucide-react";
 import { retryAudioUpload } from "@/lib/client/library-sync";
 import { Bars, Button, Initials } from "@/components/ui";
 import { getTTS } from "@/lib/providers";
 import { useJobs } from "@/lib/store/jobs";
 import { useProject } from "@/lib/store/project";
 import { isTTSReady, useSettings } from "@/lib/store/settings";
-import { NARRATOR_COLOR, formatDuration, wordCount } from "@/lib/utils";
+import { hasSounds } from "@/lib/sounds";
+import { soundscapeSummary } from "@/lib/engine/soundscape";
+import { NARRATOR_COLOR, cn, formatDuration, wordCount } from "@/lib/utils";
 import { Player } from "./player";
 
+const SOUND_LEVELS = [
+  { id: "off", label: "Off", hint: "Voices only" },
+  { id: "subtle", label: "Subtle", hint: "Ambience you feel more than hear" },
+  { id: "cinematic", label: "Cinematic", hint: "Fuller beds and effects" },
+] as const;
+
+function Soundscape() {
+  const { advanced, setAdvanced } = useSettings();
+  const { soundscape, setSoundscape } = useProject();
+  if (!hasSounds) return null;
+  return (
+    <div className="mx-auto mt-8 max-w-md rounded-2xl border border-line/70 bg-paper-2/40 p-4">
+      <div className="flex items-center justify-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
+        <Waves className="size-3.5" /> Background sound
+      </div>
+      <div className="mt-3 flex justify-center gap-1.5">
+        {SOUND_LEVELS.map((level) => (
+          <button
+            key={level.id}
+            type="button"
+            onClick={() => {
+              if (level.id !== advanced.soundscape) setAdvanced({ soundscape: level.id });
+            }}
+            aria-pressed={advanced.soundscape === level.id}
+            className={cn(
+              "cursor-pointer rounded-full px-3.5 py-1.5 text-[13px] font-medium transition",
+              advanced.soundscape === level.id ? "bg-ink text-paper" : "bg-white/60 text-ink-2 hover:bg-white",
+            )}
+          >
+            {level.label}
+          </button>
+        ))}
+      </div>
+      <p className="mt-2.5 text-center text-xs leading-relaxed text-muted">
+        {SOUND_LEVELS.find((l) => l.id === advanced.soundscape)?.hint}
+        {advanced.soundscape !== "off" && soundscape && (
+          <>
+            {" · "}
+            {soundscapeSummary(soundscape)}
+            {" · "}
+            <button type="button" className="cursor-pointer underline" onClick={() => setSoundscape(null)}>
+              score again
+            </button>
+          </>
+        )}
+      </p>
+    </div>
+  );
+}
+
 function Producing() {
-  const { produceDone, produceTotal, produceCurrent, cancelProduce } = useJobs();
+  const { produceDone, produceTotal, produceCurrent, produceStage, cancelProduce } = useJobs();
   const { analysis } = useProject();
   const pct = produceTotal ? produceDone / produceTotal : 0;
   const character = analysis?.characters.find((c) => c.id === produceCurrent?.speaker);
@@ -25,7 +77,9 @@ function Producing() {
       <div className="absolute -left-24 -top-24 size-96 animate-aurora rounded-full blur-[100px] transition-colors duration-700" style={{ background: `${color}66` }} />
       <div className="absolute -bottom-32 -right-10 size-[26rem] animate-aurora rounded-full bg-white/[0.06] blur-[110px]" style={{ animationDelay: "-8s" }} />
       <div className="relative mx-auto max-w-2xl text-center">
-        <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/55">Recording in progress</div>
+        <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/55">
+          {produceStage === "sound" ? "Designing the soundscape" : "Recording in progress"}
+        </div>
         <div className="mt-6 font-display text-5xl font-semibold tabular-nums sm:text-6xl">{Math.round(pct * 100)}%</div>
         <div className="mt-2 text-sm text-white/60">
           Line {produceDone} of {produceTotal}
@@ -187,6 +241,7 @@ export function ListenStep() {
                 <Initials key={c.id} name={c.name} color={c.color} size={36} className="ring-2 ring-paper" />
               ))}
             </div>
+            <Soundscape />
             <Button variant="brand" size="lg" className="mt-8" disabled={!castFor || !ready} onClick={() => void startProduce()}>
               Start recording
             </Button>

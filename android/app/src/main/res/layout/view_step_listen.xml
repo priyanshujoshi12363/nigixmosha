@@ -96,6 +96,7 @@
                 android:paddingBottom="32dp">
 
                 <TextView
+                    android:id="@+id/producingLabel"
                     style="@style/Text.Nigix.Mono"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -612,6 +613,67 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
                 android:orientation="horizontal" />
+
+            <LinearLayout
+                android:id="@+id/soundCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:background="@drawable/bg_card_soft"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    style="@style/Text.Nigix.Mono"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="7dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/background_sound"
+                    app:drawableStartCompat="@drawable/ic_waves"
+                    app:drawableTint="@color/text_tertiary" />
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/soundGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/soundOff"
+                        style="@style/Widget.Nigix.Toggle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sound_off" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/soundSubtle"
+                        style="@style/Widget.Nigix.Toggle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sound_subtle" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/soundCinematic"
+                        style="@style/Widget.Nigix.Toggle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sound_cinematic" />
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                <TextView
+                    android:id="@+id/soundHint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:lineSpacingMultiplier="1.15"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12.5sp" />
+            </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/startRecording"

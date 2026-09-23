@@ -6,6 +6,8 @@ import { saveAudiobook } from "@/lib/client/library-sync";
 import { castVoices } from "@/lib/engine/ai-cast";
 import { directChapter, type DirectorProgress } from "@/lib/engine/director";
 import { produceAudiobook, renderPreview } from "@/lib/engine/produce";
+import { planSoundscape } from "@/lib/engine/soundscape";
+import { hasSounds } from "@/lib/sounds";
 import { getTTS } from "@/lib/providers";
 import type { Analysis, Character, Segment } from "@/lib/types";
 import { staticVoices } from "@/lib/voices";
@@ -26,6 +28,7 @@ interface JobsState {
   produceTotal: number;
   produceCurrent: Segment | null;
   produceError: string | null;
+  produceStage: "voices" | "sound" | null;
   previewKey: string | null;
   previewState: "loading" | "playing" | null;
   previewError: string | null;
@@ -98,6 +101,7 @@ export const useJobs = create<JobsState>((set, get) => ({
   produceTotal: 0,
   produceCurrent: null,
   produceError: null,
+  produceStage: null,
   previewKey: null,
   previewState: null,
   previewError: null,
@@ -186,16 +190,43 @@ export const useJobs = create<JobsState>((set, get) => ({
     const ctrl = new AbortController();
     produceCtrl = ctrl;
     p.setStep("listen");
-    set({ produceStatus: "running", produceDone: 0, produceTotal: p.segments.length, produceCurrent: null, produceError: null });
+    set({
+      produceStatus: "running",
+      produceDone: 0,
+      produceTotal: p.segments.length,
+      produceCurrent: null,
+      produceError: null,
+      produceStage: "voices",
+    });
     try {
       const ctx = voiceContext();
       const s = useSettings.getState();
+      const level = s.advanced.soundscape;
+      let plan = p.soundscape;
+      if (level !== "off" && hasSounds && !plan && p.analysis) {
+        set({ produceStage: "sound" });
+        try {
+          plan = await planSoundscape({
+            analysis: p.analysis,
+            segments: p.segments,
+            signal: ctrl.signal,
+          });
+          useProject.getState().setSoundscape(plan);
+        } catch (err) {
+          if (isAbort(err) || ctrl.signal.aborted) throw err;
+          plan = null;
+        }
+        set({ produceStage: "voices" });
+      }
       const out = await produceAudiobook({
         ...ctx,
         segments: p.segments,
         advanced: s.advanced,
+        soundscape: plan,
+        soundLevel: level,
         signal: ctrl.signal,
         onProgress: (produceDone, produceTotal, produceCurrent) => set({ produceDone, produceTotal, produceCurrent }),
+        onMixProgress: () => set({ produceStage: "sound" }),
       });
       if (ctrl.signal.aborted) {
         URL.revokeObjectURL(out.url);
@@ -211,20 +242,20 @@ export const useJobs = create<JobsState>((set, get) => ({
         failed: out.failed.length,
         backup: out.backup.length,
       });
-      set({ produceStatus: "idle", produceCurrent: null });
+      set({ produceStatus: "idle", produceCurrent: null, produceStage: null });
       void saveAudiobook(out.blob);
     } catch (err) {
       if (produceCtrl !== ctrl) return;
       if (isAbort(err) && ctrl.signal.aborted && get().produceStatus !== "running") return;
-      if (isAbort(err)) set({ produceStatus: "idle", produceCurrent: null });
-      else set({ produceStatus: "error", produceError: message(err), produceCurrent: null });
+      if (isAbort(err)) set({ produceStatus: "idle", produceCurrent: null, produceStage: null });
+      else set({ produceStatus: "error", produceError: message(err), produceCurrent: null, produceStage: null });
     } finally {
       if (produceCtrl === ctrl) produceCtrl = null;
     }
   },
 
   cancelProduce: () => {
-    set({ produceStatus: "idle", produceCurrent: null });
+    set({ produceStatus: "idle", produceCurrent: null, produceStage: null });
     produceCtrl?.abort();
   },
 

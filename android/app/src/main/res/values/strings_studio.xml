@@ -200,6 +200,15 @@
     <string name="privacy_body">Voice keys you add are stored encrypted on this device and sent only with your own requests to the voice engine you picked. Your chapters live in your private history.</string>
     <string name="remove_keys">Remove all keys</string>
     <string name="keys_removed">Keys removed</string>
+    <string name="background_sound">Background sound</string>
+    <string name="sound_off">Off</string>
+    <string name="sound_subtle">Subtle</string>
+    <string name="sound_cinematic">Cinematic</string>
+    <string name="sound_hint_off">Voices only</string>
+    <string name="sound_hint_subtle">Ambience you feel more than hear</string>
+    <string name="sound_hint_cinematic">Fuller beds and effects</string>
+    <string name="sound_score_again">score again</string>
+    <string name="designing_soundscape">Designing the soundscape</string>
     <string name="privacy_policy">Read the privacy policy</string>
     <string name="delete_account">Delete account</string>
     <string name="delete_account_body">Permanently removes your account, every chapter, cast and script, and all recorded audiobooks. This cannot be undone.</string>

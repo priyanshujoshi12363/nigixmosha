@@ -16,6 +16,8 @@ import {
   trimSilence,
 } from "./audio";
 import { castFor } from "./casting";
+import { mixSoundscape, type SoundLevel } from "./mix";
+import type { Soundscape } from "./soundscape";
 import { styleFor } from "./direction";
 import { splitForTTS } from "./text";
 
@@ -31,7 +33,10 @@ export interface RenderContext {
 export interface ProduceOptions extends RenderContext {
   segments: Segment[];
   advanced: AdvancedSettings;
+  soundscape?: Soundscape | null;
+  soundLevel?: SoundLevel;
   onProgress?: (done: number, total: number, current: Segment) => void;
+  onMixProgress?: (done: number, total: number) => void;
 }
 
 export interface ProducedAudio {
@@ -42,6 +47,7 @@ export interface ProducedAudio {
   peaks: number[];
   failed: string[];
   backup: string[];
+  sounds: string[];
 }
 
 function backupContext(ctx: RenderContext): RenderContext {
@@ -193,7 +199,21 @@ export async function produceAudiobook(opts: ProduceOptions): Promise<ProducedAu
     });
     parts.push(silence(900));
 
-    const all = concat(parts);
+    let all = concat(parts);
+    let sounds: string[] = [];
+    const level = opts.soundLevel ?? "off";
+    if (opts.soundscape && level !== "off") {
+      const mixed = await mixSoundscape({
+        voice: all,
+        timeline,
+        plan: opts.soundscape,
+        level,
+        signal: controller.signal,
+        onProgress: opts.onMixProgress,
+      });
+      all = mixed.samples;
+      sounds = mixed.used;
+    }
     const blob = encodeWav(all);
     return {
       blob,
@@ -203,6 +223,7 @@ export async function produceAudiobook(opts: ProduceOptions): Promise<ProducedAu
       peaks: computePeaks(all, 900),
       failed,
       backup,
+      sounds,
     };
   } finally {
     opts.signal?.removeEventListener("abort", onAbort);

@@ -181,5 +181,59 @@ public final class Types {
         public int speakerGapMs = 340;
         public int paragraphGapMs = 600;
         public boolean normalize = true;
+        public String soundscape = "subtle";
+    }
+
+    public static final class SoundVariant {
+        public long id;
+        public String url;
+        public double seconds;
+        public int channels;
+        public String name;
+        public String user;
+        public String page;
+        public String license;
+    }
+
+    public static final class SoundTag {
+        public String tag;
+        public String kind;
+        public String label;
+        public double gain;
+        public List<SoundVariant> variants = new ArrayList<>();
+    }
+
+    public static final class SoundCatalog {
+        public int version;
+        public String generatedAt;
+        public String source;
+        public List<SoundTag> tags = new ArrayList<>();
+    }
+
+    public static final class SoundScene {
+        public int from;
+        public int to;
+        public String tag;
+        public double intensity = 0.6;
+        public String wanted = "";
+    }
+
+    public static final class SoundCue {
+        public int at;
+        public String tag;
+        public String placement = "before";
+        public double gain = 0.8;
+        public String wanted = "";
+    }
+
+    public static final class Soundscape {
+        public List<SoundScene> scenes = new ArrayList<>();
+        public List<SoundCue> cues = new ArrayList<>();
+        public List<String> missing = new ArrayList<>();
+        public String engine = "";
+
+        public boolean isEmpty() {
+            return scenes.isEmpty() && cues.isEmpty();
+        }
     }
 }

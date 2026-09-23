@@ -2,6 +2,7 @@
 
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+import type { Soundscape } from "@/lib/engine/soundscape";
 import type { ProjectRecord } from "@/lib/library-types";
 import type { TTSProviderId } from "@/lib/providers";
 import type { Analysis, CastEntry, Character, Segment, TimelineEntry } from "@/lib/types";
@@ -57,6 +58,7 @@ interface ProjectState {
   castReasons: Record<string, string>;
   castBy: "ai" | "rules" | null;
   shareNarrator: boolean;
+  soundscape: Soundscape | null;
   output: Output | null;
   projectId: string | null;
   projectTextHash: string | null;
@@ -75,6 +77,7 @@ interface ProjectState {
   ) => void;
   updateCast: (id: string, patch: Partial<CastEntry>) => void;
   setShareNarrator: (v: boolean) => void;
+  setSoundscape: (plan: Soundscape | null) => void;
   updateSegment: (id: string, patch: Partial<Segment>) => void;
   mergeSegmentUp: (id: string) => void;
   deleteSegment: (id: string) => void;
@@ -102,6 +105,7 @@ const empty = {
   castReasons: {},
   castBy: null,
   shareNarrator: false,
+  soundscape: null,
   output: null,
   projectId: null,
   projectTextHash: null,
@@ -129,6 +133,7 @@ export const useProject = create<ProjectState>()(
       ...empty,
       setDraft: (patch) => set(patch),
       setStep: (step) => set({ step }),
+      setSoundscape: (soundscape) => set({ soundscape }),
       setDirected: (analysis, segments, warnings) =>
         set({
           analysis,
@@ -138,6 +143,7 @@ export const useProject = create<ProjectState>()(
           castFor: null,
           castReasons: {},
           castBy: null,
+          soundscape: null,
           output: null,
           audioSave: IDLE_AUDIO,
           shareNarrator: Boolean(analysis.narrator.characterId),
@@ -251,6 +257,7 @@ export const useProject = create<ProjectState>()(
         castReasons: s.castReasons,
         castBy: s.castBy,
         shareNarrator: s.shareNarrator,
+        soundscape: s.soundscape,
         projectId: s.projectId,
         projectTextHash: s.projectTextHash,
         output: s.output?.remote ? { ...s.output, url: s.output.remote.streamUrl } : null,

@@ -12,6 +12,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         Catalog.load(this);
+        com.nigixmosha.app.engine.Sounds.load(this);
         androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(com.nigixmosha.app.data.SettingsStore.get(this).themeMode());
         LibrarySync.get(this);
         StudioJobs jobs = StudioJobs.get(this);

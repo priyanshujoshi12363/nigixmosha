@@ -31,6 +31,8 @@ import com.nigixmosha.app.R;
 import com.nigixmosha.app.databinding.ViewStepListenBinding;
 import com.nigixmosha.app.engine.Catalog;
 import com.nigixmosha.app.engine.Lang;
+import com.nigixmosha.app.engine.SoundDesigner;
+import com.nigixmosha.app.engine.Sounds;
 import com.nigixmosha.app.engine.Texts;
 import com.nigixmosha.app.engine.model.Types;
 import com.nigixmosha.app.studio.StudioJobs;
@@ -74,6 +76,7 @@ public final class ListenStep extends StepView implements AudioManager.OnAudioFo
 
     private MediaPlayer player;
     private String loadedUrl;
+    private boolean bindingSound;
     private boolean prepared;
     private boolean playing;
     private boolean triedFallback;
@@ -96,6 +99,20 @@ public final class ListenStep extends StepView implements AudioManager.OnAudioFo
         b.errorSettings.setOnClickListener(v -> host.openProfile());
         b.errorEngine.setOnClickListener(v -> host.store().setStep(StudioStore.Step.CAST));
         b.startRecording.setOnClickListener(v -> host.jobs().startProduce());
+        b.soundGroup.addOnButtonCheckedListener((group, id, checked) -> {
+            if (!checked || bindingSound) return;
+            String level = id == R.id.soundOff ? "off" : id == R.id.soundCinematic ? "cinematic" : "subtle";
+            Types.Advanced advanced = host.settings().advanced();
+            if (level.equals(advanced.soundscape)) return;
+            advanced.soundscape = level;
+            host.settings().setAdvanced(advanced);
+            renderSound();
+        });
+        b.soundHint.setOnClickListener(v -> {
+            if (host.store().state().soundscape == null) return;
+            host.store().setSoundscape(null);
+            renderSound();
+        });
         b.castFirst.setOnClickListener(v -> host.store().setStep(StudioStore.Step.CAST));
         b.rerecord.setOnClickListener(v -> {
             stop();
@@ -196,6 +213,7 @@ public final class ListenStep extends StepView implements AudioManager.OnAudioFo
     }
 
     private void renderProducing(StudioStore.State s, StudioJobs jobs) {
+        b.producingLabel.setText(jobs.produceSoundStage ? R.string.designing_soundscape : R.string.recording_in_progress);
         double pct = jobs.produceTotal == 0 ? 0 : jobs.produceDone / (double) jobs.produceTotal;
         b.percent.setText(Math.round(pct * 100) + "%");
         b.lineOf.setText(getContext().getString(R.string.line_of, jobs.produceDone, jobs.produceTotal));
@@ -228,6 +246,26 @@ public final class ListenStep extends StepView implements AudioManager.OnAudioFo
         }).start();
     }
 
+    private void renderSound() {
+        StudioStore.State s = host.store().state();
+        if (Sounds.get().isEmpty()) {
+            b.soundCard.setVisibility(View.GONE);
+            return;
+        }
+        b.soundCard.setVisibility(View.VISIBLE);
+        String level = host.settings().advanced().soundscape;
+        if (level == null) level = "subtle";
+        bindingSound = true;
+        b.soundGroup.check("off".equals(level) ? R.id.soundOff : "cinematic".equals(level) ? R.id.soundCinematic : R.id.soundSubtle);
+        bindingSound = false;
+        String hint = getContext().getString("off".equals(level) ? R.string.sound_hint_off
+                : "cinematic".equals(level) ? R.string.sound_hint_cinematic : R.string.sound_hint_subtle);
+        String summary = SoundDesigner.summary(s.soundscape);
+        b.soundHint.setText(!"off".equals(level) && !summary.isEmpty()
+                ? hint + " · " + summary + " · " + getContext().getString(R.string.sound_score_again)
+                : hint);
+    }
+
     private void renderReady(StudioStore.State s) {
         int words = 0;
         for (Types.Segment seg : s.segments) words += Texts.wordCount(seg.text);
@@ -242,6 +280,7 @@ public final class ListenStep extends StepView implements AudioManager.OnAudioFo
         boolean ready = s.castFor != null && host.settings().isReady(s.castFor.provider);
         b.startRecording.setEnabled(ready);
         b.castFirst.setVisibility(s.castFor == null ? View.VISIBLE : View.GONE);
+        renderSound();
     }
 
     private void renderPlayer(StudioStore.State s, StudioStore.Output out) {

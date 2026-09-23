@@ -4,6 +4,7 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import type { ServerConfig } from "@/lib/library-types";
 import { TTS_PROVIDERS, type TTSProviderId } from "@/lib/providers";
+import type { SoundLevel } from "@/lib/engine/mix";
 import type { ProviderConfig } from "@/lib/types";
 
 export interface AdvancedSettings {
@@ -12,6 +13,7 @@ export interface AdvancedSettings {
   speakerGapMs: number;
   paragraphGapMs: number;
   normalize: boolean;
+  soundscape: SoundLevel;
 }
 
 interface SettingsState {
@@ -35,6 +37,7 @@ export const DEFAULT_ADVANCED: AdvancedSettings = {
   speakerGapMs: 340,
   paragraphGapMs: 600,
   normalize: true,
+  soundscape: "subtle",
 };
 
 const defaultTTS = () =>

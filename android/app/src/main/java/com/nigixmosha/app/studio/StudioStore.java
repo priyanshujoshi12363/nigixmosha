@@ -85,6 +85,7 @@ public final class StudioStore {
         public Map<String, String> castReasons = new LinkedHashMap<>();
         public String castBy;
         public boolean shareNarrator;
+        public Types.Soundscape soundscape;
         public Output output;
         public String projectId;
         public String projectTextHash;
@@ -222,8 +223,14 @@ public final class StudioStore {
         s.output = null;
         s.audioSave = new AudioSave();
         s.shareNarrator = analysis.narrator.characterId != null;
+        s.soundscape = null;
         s.step = Step.CAST;
         changed(true);
+    }
+
+    public void setSoundscape(Types.Soundscape plan) {
+        s.soundscape = plan;
+        changed(false);
     }
 
     public void updateTitle(String title) {

@@ -10,11 +10,15 @@ import com.nigixmosha.app.R;
 import com.nigixmosha.app.data.ApiClient;
 import com.nigixmosha.app.data.ApiException;
 import com.nigixmosha.app.data.SettingsStore;
+import com.nigixmosha.app.data.SoundCache;
 import com.nigixmosha.app.engine.AiCast;
 import com.nigixmosha.app.engine.Cancel;
 import com.nigixmosha.app.engine.Catalog;
 import com.nigixmosha.app.engine.Director;
+import com.nigixmosha.app.engine.Mixer;
 import com.nigixmosha.app.engine.Producer;
+import com.nigixmosha.app.engine.SoundDesigner;
+import com.nigixmosha.app.engine.Sounds;
 import com.nigixmosha.app.engine.model.Types;
 
 import java.io.File;
@@ -58,6 +62,7 @@ public final class StudioJobs {
     public int produceTotal;
     public Types.Segment produceCurrent;
     public String produceError;
+    public boolean produceSoundStage;
     public String previewKey;
     public String previewState;
     public String previewError;
@@ -326,6 +331,7 @@ public final class StudioJobs {
         produceTotal = p.segments.size();
         produceCurrent = null;
         produceError = null;
+        produceSoundStage = false;
         changed();
         Producer.Context ctx;
         try {
@@ -339,17 +345,49 @@ public final class StudioJobs {
         }
         List<Types.Segment> segments = new ArrayList<>(p.segments);
         Types.Advanced advanced = settings.advanced();
+        Types.Analysis analysis = p.analysis;
+        Types.Soundscape existing = p.soundscape;
         File dir = new File(app.getFilesDir(), "audio");
         dir.mkdirs();
         worker.execute(() -> {
             try {
+                String level = advanced.soundscape == null ? "off" : advanced.soundscape;
+                Types.Soundscape plan = existing;
+                if (!"off".equals(level) && !Sounds.get().isEmpty() && plan == null && analysis != null) {
+                    post(() -> {
+                        if (produceCancel != cancel) return;
+                        produceSoundStage = true;
+                        changed();
+                    });
+                    try {
+                        plan = SoundDesigner.plan(analysis, segments, (system, prompt) -> api.brain(system, prompt, cancel), null, cancel);
+                        Types.Soundscape saved = plan;
+                        post(() -> {
+                            if (produceCancel == cancel) store.setSoundscape(saved);
+                        });
+                    } catch (Cancel.Cancelled c) {
+                        throw c;
+                    } catch (Exception ignored) {
+                        plan = null;
+                    }
+                    post(() -> {
+                        if (produceCancel != cancel) return;
+                        produceSoundStage = false;
+                        changed();
+                    });
+                }
+                Mixer.Source source = "off".equals(level) ? null : new SoundCache(app, api.http()).source(cancel);
                 Producer.Output out = Producer.produce(segments, ctx, advanced, speech(), (done, total, current) -> post(() -> {
                     if (produceCancel != cancel) return;
                     produceDone = done;
                     produceTotal = total;
                     produceCurrent = current;
                     changed();
-                }), cancel, dir);
+                }), cancel, dir, plan, level, source, (done, total) -> post(() -> {
+                    if (produceCancel != cancel) return;
+                    produceSoundStage = true;
+                    changed();
+                }));
                 post(() -> {
                     if (produceCancel != cancel || cancel.isCancelled()) {
                         out.file.delete();
@@ -367,6 +405,7 @@ public final class StudioJobs {
                     store.setOutput(o);
                     produceStatus = Status.IDLE;
                     produceCurrent = null;
+                    produceSoundStage = false;
                     produceCancel = null;
                     changed();
                     sync.saveAudiobook(out.file);

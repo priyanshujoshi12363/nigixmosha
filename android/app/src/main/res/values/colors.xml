@@ -2,6 +2,7 @@
 <resources>
     <color name="bg">#F6F5F1</color>
     <color name="bg_elevated">#FBFAF7</color>
+    <color name="surface_soft">#F1EFE9</color>
     <color name="surface">#FFFFFF</color>
     <color name="surface_high">#F1EFEA</color>
     <color name="surface_highest">#E6E4DE</color>

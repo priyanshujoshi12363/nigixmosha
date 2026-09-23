@@ -43,6 +43,7 @@ public final class Producer {
         public List<Double> peaks = new ArrayList<>();
         public List<String> failed = new ArrayList<>();
         public List<String> backup = new ArrayList<>();
+        public List<String> sounds = new ArrayList<>();
     }
 
     private static final long CACHE_BUDGET = 48L * 1024 * 1024;
@@ -132,6 +133,12 @@ public final class Producer {
 
     public static Output produce(List<Types.Segment> segments, Context ctx, Types.Advanced advanced, Speech speech,
                                  Progress progress, Cancel parent, File dir) throws Exception {
+        return produce(segments, ctx, advanced, speech, progress, parent, dir, null, "off", null, null);
+    }
+
+    public static Output produce(List<Types.Segment> segments, Context ctx, Types.Advanced advanced, Speech speech,
+                                 Progress progress, Cancel parent, File dir, Types.Soundscape plan, String soundLevel,
+                                 Mixer.Source soundSource, Mixer.Progress mixProgress) throws Exception {
         Types.ProviderMeta meta = Catalog.get().provider(ctx.provider);
         Cancel cancel = parent.child();
         int limit = Math.max(1, Math.min(meta.concurrency, advanced.ttsConcurrency));
@@ -240,17 +247,58 @@ public final class Producer {
         }
         totalSamples += AudioCodec.silenceSamples(900);
 
+        int lead = AudioCodec.silenceSamples(300);
+        int tail = AudioCodec.silenceSamples(900);
+        double[] starts = new double[total];
+        double[] ends = new double[total];
+        long walk = lead;
+        double lastEnd = lead / (double) AudioCodec.RATE;
+        int step = 0;
+        for (int i = 0; i < total; i++) {
+            if (step < index.size() && index.get(step) == i) {
+                walk += gaps.get(step);
+                starts[i] = walk / (double) AudioCodec.RATE;
+                walk += finished.get(step).length;
+                ends[i] = walk / (double) AudioCodec.RATE;
+                lastEnd = ends[i];
+                step++;
+            } else {
+                starts[i] = lastEnd;
+                ends[i] = lastEnd;
+            }
+        }
+
+        Mixer mixer = null;
+        if (soundSource != null && Mixer.enabled(soundLevel, plan)) {
+            mixer = Mixer.build(plan, soundLevel, starts, ends, soundSource, mixProgress, parent);
+            if (!mixer.hasWork()) mixer = null;
+        }
+
         Output out = new Output();
         out.file = new File(dir, "audiobook-" + System.currentTimeMillis() + ".wav");
         long cursor;
         try (AudioCodec.WavWriter w = new AudioCodec.WavWriter(out.file, totalSamples, 900)) {
-            int lead = AudioCodec.silenceSamples(300);
-            w.silence(lead);
+            if (mixer != null) {
+                short[] head = new short[lead];
+                mixer.process(head, 0);
+                w.write(head);
+            } else {
+                w.silence(lead);
+            }
             cursor = lead;
             for (int k = 0; k < finished.size(); k++) {
                 parent.check();
-                w.silence(gaps.get(k));
-                cursor += gaps.get(k);
+                int gap = gaps.get(k);
+                if (gap > 0) {
+                    if (mixer != null) {
+                        short[] pause = new short[gap];
+                        mixer.process(pause, cursor);
+                        w.write(pause);
+                    } else {
+                        w.silence(gap);
+                    }
+                    cursor += gap;
+                }
                 short[] s = finished.get(k);
                 Types.Segment seg = segments.get(index.get(k));
                 Types.TimelineEntry t = new Types.TimelineEntry();
@@ -259,16 +307,24 @@ public final class Producer {
                 t.start = cursor / (double) AudioCodec.RATE;
                 t.end = (cursor + s.length) / (double) AudioCodec.RATE;
                 out.timeline.add(t);
+                if (mixer != null) mixer.process(s, cursor);
                 w.write(s);
                 cursor += s.length;
                 finished.set(k, null);
             }
-            w.silence(AudioCodec.silenceSamples(900));
+            if (mixer != null) {
+                short[] outro = new short[tail];
+                mixer.process(outro, cursor);
+                w.write(outro);
+            } else {
+                w.silence(tail);
+            }
             for (float p : w.peaks()) out.peaks.add((double) p);
         } catch (Exception e) {
             out.file.delete();
             throw e;
         }
+        if (mixer != null) out.sounds = mixer.used();
         out.duration = totalSamples / (double) AudioCodec.RATE;
         out.failed = new ArrayList<>(failed);
         out.backup = new ArrayList<>(backup);

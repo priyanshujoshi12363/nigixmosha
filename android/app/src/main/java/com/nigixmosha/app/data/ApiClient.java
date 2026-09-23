@@ -141,6 +141,10 @@ public final class ApiClient {
         return store.user();
     }
 
+    public OkHttpClient http() {
+        return http;
+    }
+
     public TokenStore store() {
         return store;
     }
